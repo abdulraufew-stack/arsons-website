@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AR & Sons Engineering & Trading Co.</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial, sans-serif;}
+body{background:#0f172a;color:#e5e7eb;}
+
+header{
+background:#111827;
+padding:20px;
+text-align:center;
+border-bottom:2px solid #334155;
+}
+
+header h1{font-size:26px;}
+header p{color:#94a3b8;margin-top:5px;}
+
+.container{max-width:1000px;margin:auto;padding:20px;}
+
+.contact{
+background:#111827;
+padding:15px;
+border-radius:10px;
+margin-top:15px;
+}
+
+.contact p{margin:5px 0;}
+
+.section{
+margin-top:25px;
+padding:15px;
+background:#111827;
+border-radius:10px;
+}
+
+input,button{
+width:100%;
+padding:12px;
+margin-top:8px;
+border-radius:6px;
+border:none;
+}
+
+input{background:#1f2937;color:white;}
+
+button{
+background:#2563eb;
+color:white;
+cursor:pointer;
+font-weight:bold;
+}
+
+button:hover{background:#1d4ed8;}
+
+.card{
+background:#1f2937;
+padding:12px;
+margin-top:10px;
+border-radius:10px;
+}
+
+.card img{
+width:100%;
+height:200px;
+object-fit:cover;
+border-radius:8px;
+}
+
+.services{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+gap:10px;
+margin-top:10px;
+}
+
+.service-box{
+background:#1f2937;
+padding:15px;
+border-radius:10px;
+text-align:center;
+}
+
+.whatsapp{
+position:fixed;
+bottom:20px;
+right:20px;
+background:#25D366;
+color:white;
+padding:12px 15px;
+border-radius:50px;
+text-decoration:none;
+font-weight:bold;
+}
+
+</style>
+</head>
+<body>
+
+<header>
+<h1>AR & Sons Engineering & Trading Co.</h1>
+<p>Import • Export • Heavy Machinery • Workshop Services</p>
+</header>
+
+<div class="container">
+
+<div class="contact">
+<p>📞 +92 300 7438937 (WhatsApp / IMO)</p>
+<p>📞 +92 300 1674122</p>
+<p>📧 abdulraufew@gmail.com</p>
+</div>
+
+<div class="section">
+<h2>Our Services</h2>
+<div class="services">
+<div class="service-box">Heavy Machinery Trading</div>
+<div class="service-box">Workshop Repairing</div>
+<div class="service-box">Welding Services</div>
+<div class="service-box">Import & Export</div>
+</div>
+</div>
+
+<div class="section">
+<h2>Add Machine</h2>
+
+<input type="text" id="name" placeholder="Machine Name" />
+<input type="text" id="model" placeholder="Model Number" />
+<input type="text" id="img" placeholder="Image URL" />
+<button onclick="addMachine()">Add Machine</button>
+
+<div id="list"></div>
+</div>
+
+</div>
+
+<a class="whatsapp" href="https://wa.me/923007438937" target="_blank">WhatsApp</a>
+
+<script>
+let machines = JSON.parse(localStorage.getItem('machines') || '[]');
+
+function render(){
+document.getElementById('list').innerHTML='';
+
+machines.forEach(m=>{
+document.getElementById('list').innerHTML += `
+<div class='card'>
+<img src="${m.img || 'https://via.placeholder.com/400'}" />
+<h3>${m.name}</h3>
+<p>Model: ${m.model}</p>
+</div>
+`;
+});
+
+localStorage.setItem('machines', JSON.stringify(machines));
+}
+
+function addMachine(){
+let name=document.getElementById('name').value;
+let model=document.getElementById('model').value;
+let img=document.getElementById('img').value;
+
+if(!name||!model)return;
+
+machines.unshift({name,model,img});
+render();
+
+document.getElementById('name').value='';
+document.getElementById('model').value='';
+document.getElementById('img').value='';
+}
+
+render();
+</script>
+
+</body>
+</html>
